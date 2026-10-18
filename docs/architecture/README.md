@@ -15,7 +15,7 @@ Components are tagged with the phase that delivers them (**P1** to **P5**), so t
 | 03 | [Components](03-components.md) | Inside each container | Which services and modules live in each process |
 | 04 | [Layers](04-layers.md) | Code organisation | How the code is layered and which way dependencies point |
 | 05 | [Interfaces](05-interfaces.md) | Contracts | The `Protocol`s every swappable part implements |
-| 06 | [Domain model](06-domain-model.md) | Data | Domain objects, their invariants and the database schema |
+| 06 | [Domain model](06-domain-model.md) | Data | Why the domain model exists, its objects and their rules, how they flow, and the database schema |
 | 07 | [Ingestion](07-ingestion.md) | Runtime flow | How a file becomes searchable chunks |
 | 08 | [Query](08-query.md) | Runtime flow | How a question becomes a cited answer, plus caching and fallbacks |
 | 09 | [Evaluation](09-evaluation.md) | Runtime flow | How quality is measured, gated and diagnosed |

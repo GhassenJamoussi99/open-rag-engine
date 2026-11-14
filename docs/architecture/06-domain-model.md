@@ -48,7 +48,7 @@ flowchart TB
     adapters --> domain
 ```
 
-`domain/` imports only the standard library and Pydantic. It must never import from any other package in the project, and it must never import a database driver, a web framework or an LLM SDK. Task 2 of Phase 1 enforces this with a ruff `banned-api` rule that fails the build if `domain/` imports one of those libraries.
+`domain/` imports only the standard library and Pydantic. It must never import from any other package in the project, and it must never import a database driver, a web framework or an LLM SDK. `tests/unit/test_architecture.py` enforces this with an allow-list: it reads every module in `domain/` and `interfaces/` and fails if one imports anything other than the standard library, Pydantic or an inner layer.
 
 ## The objects
 
@@ -315,7 +315,7 @@ erDiagram
 
     DOCUMENTS {
         uuid id PK
-        text source_uri UK
+        text source_uri UK "unique with tenant_id"
         text content_hash
         text doc_type
         text title
@@ -384,6 +384,6 @@ erDiagram
 | `feedback` | Thumbs up/down linked to a query, exported as candidate eval cases | P4 |
 | `api_keys` | Hashed keys with tenant, access tags and rate limit | P4 |
 
-Indexes: HNSW on `chunks.embedding` (cosine), btree on `chunks(tenant_id, doc_type)`, GIN on `chunks.access_tags` and (P3) `chunks.search_text`, unique on `documents.source_uri`.
+Indexes: HNSW on `chunks.embedding` (cosine), btree on `chunks(tenant_id, doc_type)`, GIN on `chunks.access_tags` and (P3) `chunks.search_text`, unique on `documents(tenant_id, source_uri)`, so two tenants can each have a file at the same path.
 
 Migrations are plain numbered SQL files in `store/migrations/`, applied by `ore migrate`.

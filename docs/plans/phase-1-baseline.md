@@ -91,10 +91,11 @@ docker/  docker-compose.yml  pyproject.toml
 
 ```sql
 documents (
-  id uuid primary key, source_uri text unique not null, content_hash text not null,
+  id uuid primary key, source_uri text not null, content_hash text not null,
   doc_type text not null, title text, tenant_id text not null default 'default',
   access_tags text[] not null default '{}', page_count int,
-  created_at timestamptz, updated_at timestamptz
+  created_at timestamptz, updated_at timestamptz,
+  unique (tenant_id, source_uri)
 )
 
 chunks (

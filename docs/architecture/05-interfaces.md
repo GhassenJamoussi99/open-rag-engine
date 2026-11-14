@@ -93,9 +93,9 @@ classDiagram
     }
     class DocumentRepository {
         <<Protocol>>
-        +get_by_uri(uri) Document
+        +get_by_uri(tenant_id, uri) Document
         +replace(document, chunks) None
-        +delete(document_id) None
+        +delete(tenant_id, document_id) None
     }
 
     IngestionService ..> Parser
